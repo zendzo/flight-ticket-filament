@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PromoCode extends Model
@@ -17,4 +18,9 @@ class PromoCode extends Model
         'max_usage',
         'is_available',
     ];
+
+    public function transaction() : HasOne
+    {
+        return $this->hasOne(Transaction::class);
+    }
 }

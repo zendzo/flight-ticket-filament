@@ -17,4 +17,9 @@ class Airport extends Model
         'country',
         'image',
     ];
+
+    public function segments()
+    {
+        return $this->hasMany(FlightSegment::class);
+    }
 }
