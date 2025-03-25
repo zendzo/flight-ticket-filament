@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('airports', function (Blueprint $table) {
             $table->id();
+            $table->string("iata_code", 3)->unique();
+            $table->string("name");
+            $table->string("city");
+            $table->string("country");
+            $table->string("image")->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

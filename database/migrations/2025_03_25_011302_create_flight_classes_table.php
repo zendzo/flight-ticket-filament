@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('flight_classes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('flight_id')->constrained()->cascadeOnDelete();
+            $table->enum('class', ['economy', 'business']);
+            $table->integer('price');
+            $table->integer('available_seats');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
