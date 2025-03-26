@@ -94,13 +94,27 @@ class FlightResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('flight_number')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('airline.name'),
+                Tables\Columns\TextColumn::make('segments')
+                    ->label('Route & Duration')
+                    ->formatStateUsing(function (Flight $record) : string {
+                        $firstSegment = $record->segments->first();
+                        $lastSegment = $record->segments->last();
+                        $route = $firstSegment->airport->iata_code . ' - ' . $lastSegment->airport->iata_code;
+                        $duration = (new \DateTime($firstSegment->timte))->format('d F Y H:i') . ' - ' . (new \DateTime($lastSegment->time))->format('d F Y H:i');
+                        return "{$route} | ({$duration})";
+                    }),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
