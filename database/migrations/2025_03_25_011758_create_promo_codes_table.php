@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('discount_value', 10, 2);
             $table->dateTime('valid_until');
             $table->boolean('is_available')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
