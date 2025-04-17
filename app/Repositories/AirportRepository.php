@@ -7,7 +7,16 @@ use App\Interfaces\AirportRepositoryInterface;
 class AirportRepository implements AirportRepositoryInterface {
 
   public function getAllAirports() {
-    return \App\Models\Airport::all();
+    // Use chunking to process large datasets efficiently and avoid memory issues
+    $airports = [];
+    \App\Models\Airport::select(['id', 'name', 'iata_code', 'image'])
+      ->orderBy('id')
+      ->chunk(1000, function ($chunk) use (&$airports) {
+        foreach ($chunk as $airport) {
+          $airports[] = $airport;
+        }
+      });
+    return collect($airports);
   }
 
   public function getAirportBySlug($slug) {

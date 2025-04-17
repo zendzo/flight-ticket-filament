@@ -3,7 +3,7 @@
 @section('content')
     <main class="relative flex flex-col w-full max-w-[1280px] px-[75px] mx-auto mt-[50px] mb-[62px]">
         <h1 class="font-extrabold text-[50px] leading-[75px]">Flight Search</h1>
-        @if (request()->has('departure') || request()->has('arrival'))
+        @if (request()->has('departure') || request()->has('arrival') || request()->has('date') || request()->has('quantity'))
             <div class="flex w-fit rounded-[20px] p-5 gap-[30px] bg-white mt-5">
                 @if ($departureAirport)
                     <div class="flex flex-col gap-[2px]">
@@ -11,11 +11,21 @@
                         <p class="font-semibold text-lg">{{ $departureAirport->name }} ({{ $departureAirport->iata_code }})
                         </p>
                     </div>
+                    @else
+                    <div class="flex flex-col gap-[2px]">
+                      <p class="text-sm text-garuda-grey">Departure</p>
+                      <p class="font-semibold text-lg">-</p>
+                  </div>
                 @endif
                 @if ($arrivalAirport)
                     <div class="flex flex-col gap-[2px]">
                         <p class="text-sm text-garuda-grey">Arrival</p>
                         <p class="font-semibold text-lg">{{ $arrivalAirport->name }} ({{ $arrivalAirport->iata_code }})</p>
+                    </div>
+                @else
+                    <div class="flex flex-col gap-[2px]">
+                        <p class="text-sm text-garuda-grey">Arrival</p>
+                        <p class="font-semibold text-lg">-</p>
                     </div>
                 @endif
                 <div class="flex flex-col gap-[2px]">
@@ -179,8 +189,9 @@
                             </div>
                             <div
                                 class="grid grid-cols-2 w-[320px] shrink-0 h-fit p-5 gap-y-6 justify-between rounded-[30px] bg-garuda-bg-grey">
-                                @foreach ($flight->classes as $class)
-                                    @foreach ($class->facilities as $facility)
+                                @foreach ($flight->first()->classes as $class)
+                                @if ($loop->first)
+                                    @foreach ($class->first()->facilities as $facility)
                                         <div class="flex items-center gap-3 even:w-[139px] shrink-0">
                                             <img src="{{ asset('storage/' . $facility->image) }}"
                                                 class="w-6 h-6 flex shrink-0" alt="icon">
@@ -189,7 +200,8 @@
                                                 <p class="text-xs leading-[18px] text-garuda-grey">Included</p>
                                             </div>
                                         </div>
-                                    @endforeach
+                                        @endforeach
+                                  @endif
                                 @endforeach
                             </div>
                         </div>

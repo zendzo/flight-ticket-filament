@@ -31,7 +31,6 @@ class FlightRepository implements FlightRepositoryInterface
         $query->whereDate('time', $filter['date']);
       });
     }
-    dd($flights->toSql());
     return $flights->get();
   }
 
