@@ -20,8 +20,8 @@ class FlightController extends Controller
         $arrivalAirport = $airportRepository->getAirportByIataCode($request->input('arrival'));
         $airlines = $airlineRepository->getAll();
         $flights = $flightRepository->getAllFlights([
-          'daparture' => $departureAirport,
-          'arrival' => $arrivalAirport,
+          'daparture' => $departureAirport ? $departureAirport->id : null,
+          'arrival' => $arrivalAirport ? $arrivalAirport->id : null,
           'date' => $request->input('date'),
           'quantity' => $request->input('quantity'),
         ]);
