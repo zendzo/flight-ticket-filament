@@ -7,20 +7,20 @@ use App\Interfaces\FlightRepositoryInterface;
 class FlightRepository implements FlightRepositoryInterface
 {
 
-  public function getAlFlights($filter = null)
+  public function getAllFlights($filter = null)
   {
     $flights = \App\Models\Flight::query();
 
     if (!empty($filter['departure'])) {
-      $flights->whareHas('segments', function ($query) use ($filter) {
+      $flights->whereHas('segments', function ($query) use ($filter) {
         $query->where('airport_id', $filter['departure'])
           ->where('squence', 1);
       });
     }
 
-    if (!empty($filter['destination'])) {
-      $flights->whareHas('segments', function ($query) use ($filter) {
-        $query->where('airport_id', $filter['destination'])
+    if (!empty($filter['arrival'])) {
+      $flights->whereHas('segments', function ($query) use ($filter) {
+        $query->where('airport_id', $filter['arrival'])
           ->orderBy('squence', 'desc')
           ->limit(1);
       });
@@ -31,7 +31,7 @@ class FlightRepository implements FlightRepositoryInterface
         $query->whereDate('time', $filter['date']);
       });
     }
-
+    dd($flights->toSql());
     return $flights->get();
   }
 

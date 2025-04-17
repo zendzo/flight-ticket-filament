@@ -12,5 +12,5 @@ interface TransactionRepositoryInterface {
 
   public function getTransactionByCode($code);
 
-  public function getTransactionByCodeWithPassengers($code, $email, $phone);
+  public function getTransactionByCodeEmailPhone($code, $email, $phone);
 }
