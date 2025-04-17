@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("iata_code", 3)->unique();
             $table->string("name");
             $table->string("city");
-            $table->string("country");
+            $table->string("country")->nullable->default("Indonesia");
             $table->string("image")->nullable();
             $table->softDeletes();
             $table->timestamps();
