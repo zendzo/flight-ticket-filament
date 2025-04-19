@@ -5,6 +5,9 @@ namespace App\Providers;
 use App\Interfaces\AirlineRepositoryInterface;
 use App\Interfaces\AirportRepositoryInterface;
 use App\Interfaces\FlightRepositoryInterface;
+use App\Interfaces\FacilityRepositoryInterface;
+use App\Interfaces\TransactionRepositoryInterface;
+use App\Repositories\FacilityRepository;
 use App\Repositories\AirlineRepository;
 use App\Repositories\AirportRepository;
 use App\Repositories\FlightRepository;
@@ -21,7 +24,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AirlineRepositoryInterface::class, AirlineRepository::class);
         $this->app->bind(AirportRepositoryInterface::class, AirportRepository::class);
         $this->app->bind(FlightRepositoryInterface::class, FlightRepository::class);
-        $this->app->bind(TransactionRepository::class, TransactionRepository::class);
+        $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
+        $this->app->bind(FacilityRepositoryInterface::class, FacilityRepository::class);
     }
 
     /**

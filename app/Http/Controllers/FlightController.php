@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\AirlineRepositoryInterface;
 use App\Interfaces\AirportRepositoryInterface;
 use App\Interfaces\FlightRepositoryInterface;
+use App\Interfaces\FacilityRepositoryInterface;
 use Illuminate\Http\Request;
 
 class FlightController extends Controller
@@ -13,7 +14,8 @@ class FlightController extends Controller
       Request $request,
       AirportRepositoryInterface $airportRepository, 
       AirlineRepositoryInterface $airlineRepository, 
-      FlightRepositoryInterface $flightRepository
+      FlightRepositoryInterface $flightRepository,
+      FacilityRepositoryInterface $facilitiesRepository
       )
     {
         $departureAirport = $airportRepository->getAirportByIataCode($request->input('departure'));
@@ -25,8 +27,10 @@ class FlightController extends Controller
           'date' => $request->input('date'),
           'quantity' => $request->input('quantity'),
         ]);
+        $facilities = $facilitiesRepository->getAllFacilities();
         return view('pages.flight.index',[
           'flights' => $flights,
+          'facilities' => $facilities,
           'airlines' => $airlines,
           'departureAirport' => $departureAirport,
           'arrivalAirport' => $arrivalAirport,

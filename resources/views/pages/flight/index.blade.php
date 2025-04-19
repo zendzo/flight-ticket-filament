@@ -80,36 +80,14 @@
                 <hr class="border-[#E8EFF7]">
                 <div id="Facilities" class="flex flex-col gap-4">
                     <p class="font-semibold">Facilities</p>
+                    @foreach ($facilities as $facility)
                     <label class="flex items-center gap-[10px]">
-                        <input type="checkbox" name="facilities" id=""
-                            class="flex w-6 h-6 shrink-0 appearance-none outline-none rounded-lg ring-1 ring-garuda-black border border-white checked:bg-black checked:border-[5px]">
-                        <img src="assets/images/icons/box-black.svg" alt="icon">
-                        <span class="font-semibold">Baggage</span>
-                    </label>
-                    <label class="flex items-center gap-[10px]">
-                        <input type="checkbox" name="facilities" id=""
-                            class="flex w-6 h-6 shrink-0 appearance-none outline-none rounded-lg ring-1 ring-garuda-black border border-white checked:bg-black checked:border-[5px]">
-                        <img src="assets/images/icons/video-play-black.svg" alt="icon">
-                        <span class="font-semibold">Entertainment</span>
-                    </label>
-                    <label class="flex items-center gap-[10px]">
-                        <input type="checkbox" name="facilities" id=""
-                            class="flex w-6 h-6 shrink-0 appearance-none outline-none rounded-lg ring-1 ring-garuda-black border border-white checked:bg-black checked:border-[5px]">
-                        <img src="assets/images/icons/electricity-black.svg" alt="icon">
-                        <span class="font-semibold">USB C and Port</span>
-                    </label>
-                    <label class="flex items-center gap-[10px]">
-                        <input type="checkbox" name="facilities" id=""
-                            class="flex w-6 h-6 shrink-0 appearance-none outline-none rounded-lg ring-1 ring-garuda-black border border-white checked:bg-black checked:border-[5px]">
-                        <img src="assets/images/icons/wifi-black.svg" alt="icon">
-                        <span class="font-semibold">Wi-Fi Onboard</span>
-                    </label>
-                    <label class="flex items-center gap-[10px]">
-                        <input type="checkbox" name="facilities" id=""
-                            class="flex w-6 h-6 shrink-0 appearance-none outline-none rounded-lg ring-1 ring-garuda-black border border-white checked:bg-black checked:border-[5px]">
-                        <img src="assets/images/icons/coffee-black.svg" alt="icon">
-                        <span class="font-semibold">Heavy Meals</span>
-                    </label>
+                      <input type="checkbox" name="{{ $facility->name }}" id="{{ 'facility-' . $facility->id }}" value="{{ $facility->id }}"
+                          class="flex w-6 h-6 shrink-0 appearance-none outline-none rounded-lg ring-1 ring-garuda-black border border-white checked:bg-black checked:border-[5px]">
+                      <img src="{{ 'storage/'.$facility->image }}" alt="{{ 'logo-' . $facility->name }}" />
+                      <span class="font-semibold">{{ $facility->name }}</span>
+                  </label>
+                    @endforeach
                 </div>
             </form>
             <div id="Result" class="flex flex-col w-full h-fit rounded-3xl p-5 gap-5 bg-white">
