@@ -36,4 +36,12 @@ class FlightController extends Controller
           'arrivalAirport' => $arrivalAirport,
         ]);
     }
+
+    public function show($flightNumber, FlightRepositoryInterface $flightRepository)
+    {
+        $flight = $flightRepository->getFlightsByFlightNumber($flightNumber);
+        return view('pages.flight.show', [
+            'flight' => $flight,
+        ]);
+    }
 }
