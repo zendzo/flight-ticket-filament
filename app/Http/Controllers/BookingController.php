@@ -35,4 +35,28 @@ class BookingController extends Controller
       'tier' => $tier,
     ]);
   }
+
+  public function confirmSeat(Request $request, $flightNumber, TransactionRepositoryInterface $transactionRepository)
+  {
+    $transactionRepository->saveTransactionDataToSession($request->all());
+
+    return redirect()->route('booking.passenger-details', [
+      'flightNumber' => $flightNumber,
+    ]);
+  }
+
+  public function passengerDetails($flightNumber, TransactionRepositoryInterface $transactionRepository, FlightRepositoryInterface $flightRepository)
+  {
+    $transaction = $transactionRepository->getTransactionsDataFromSession();
+    $flight = $flightRepository->getFlightsByFlightNumber($flightNumber);
+    $tier = $flight->classes->find($transaction['flight_class_id']);
+    if (!$transaction) {
+      return redirect()->back();
+    }
+    return view('pages.booking.passenger-details', [
+      'flight' => $flight,
+      'transaction' => $transaction,
+      'tier' => $tier,
+    ]);
+  }
 }

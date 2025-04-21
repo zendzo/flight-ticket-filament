@@ -99,7 +99,7 @@
                         <div class="flex flex-col gap-1">
                             <p class="font-semibold text-lg">{{ ucfirst($class->class) }} Class</p>
                             <p class="font-extrabold text-[32px] leading-[48px]">
-                                {{ 'Rp ' . number_format($flight->classes->first()->price, 0, ',', '.') }}</p>
+                                {{ 'Rp ' . number_format($class->price, 0, ',', '.') }}</p>
                         </div>
                         <hr class="border-[#E8EFF7]">
                         @foreach ($class->facilities as $facility)

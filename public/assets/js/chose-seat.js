@@ -6,10 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const quantityElement = document.getElementById('quantity');
     const priceElement = document.getElementById('price');
     const subTotalElement = document.getElementById('subTotal');
+    const taxRateElement = document.getElementById('tax');
     const totalTaxElement = document.getElementById('totalTax');
     const grandTotalElement = document.getElementById('grandTotal');
 
-    const basePrice = 50000;
+    
     const taxRate = 0.11;
 
     // Function to update the seat display information
@@ -20,11 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const subTotal = basePrice * selectedSeats.length;
         const totalTax = subTotal * taxRate;
         const grandTotal = subTotal + totalTax;
+        const tax = taxRate * 100;
 
         priceElement.textContent = `Rp ${basePrice.toLocaleString()}`;
         subTotalElement.textContent = `Rp ${subTotal.toLocaleString()}`;
         totalTaxElement.textContent = `Rp ${totalTax.toLocaleString()}`;
         grandTotalElement.textContent = `Rp ${grandTotal.toLocaleString()}`;
+        taxRateElement.textContent = `${tax.toLocaleString()}%`;
     }
 
     // Add event listener to each seat checkbox

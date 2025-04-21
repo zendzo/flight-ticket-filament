@@ -1,12 +1,20 @@
 @extends('layouts.app')
 
+@section('includes')
+    <div id="Background"
+        class="absolute top-0 w-full h-[810px] bg-[linear-gradient(180deg,#85C8FF_0%,#D4D1FE_47.05%,#F3F6FD_100%)]">
+        <img src="{{ asset('assets/images/backgrounds/Jumbo Jet Sky (1) 1.png') }}"
+            class="absolute right-0 top-[147px] object-contain max-h-[481px]" alt="background image">
+    </div>
+@endsection
+
 @section('content')
     <main class="relative flex flex-col w-full max-w-[1280px] px-[75px] mx-auto mt-[50px] mb-[62px]">
         <div class="flex">
             <div id="Left-Content" class="flex flex-col gap-[30px] w-[470px] shrink-0">
                 <a href="{{ route('flight.show', $flight->flight_number) }}"
                     class="flex items-center rounded-[50px] py-3 px-5 gap-[10px] w-fit bg-garuda-black">
-                    <img src="{{ asset('/assets/images/icons/arrow-left-white.svg') }}" class="w-6 h-6" alt="icon">
+                    <img src="{{ asset('assets/images/icons/arrow-left-white.svg') }}" class="w-6 h-6" alt="icon">
                     <p class="font-semibold text-white">Back to Choose Flight</p>
                 </a>
                 <h1 class="font-extrabold text-[50px] leading-[75px]">Choose Seats</h1>
@@ -23,13 +31,15 @@
                             <div>
                                 <p class="text-sm text-garuda-grey">Departure</p>
                                 <p class="font-semibold text-lg">
-                                  {{ $flight->segments->first()->airport->name }} ({{ $flight->segments->first()->airport->iata_code }})
+                                    {{ $flight->segments->first()->airport->name }}
+                                    ({{ $flight->segments->first()->airport->iata_code }})
                                 </p>
                             </div>
                             <div class="text-end">
                                 <p class="text-sm text-garuda-grey">Arrival</p>
                                 <p class="font-semibold text-lg">
-                                  {{ $flight->segments->last()->airport->name }} ({{ $flight->segments->last()->airport->iata_code }})
+                                    {{ $flight->segments->last()->airport->name }}
+                                    ({{ $flight->segments->last()->airport->iata_code }})
                                 </p>
                             </div>
                         </div>
@@ -64,38 +74,41 @@
                                         </p>
                                     </div>
                                     <div class="flex flex-col gap-[2px] items-center justify-center">
-                                        <p class="text-sm text-garuda-grey">{{ number_format($flight->segments->first()->time->diffInHour($flight->segments->last()->time)) }}
-                                          hours</p>
+                                        <p class="text-sm text-garuda-grey">
+                                            {{ number_format($flight->segments->first()->time->diffInHour($flight->segments->last()->time)) }}
+                                            hours</p>
                                         <div class="flex items-center gap-[6px]">
-                                            <p class="font-semibold">{{ $flight->segments->first()->airport->iata_code }}</p>
-                                            <img src="{{ asset('/assets/images/icons/transit-black.svg') }}" alt="icon">
+                                            <p class="font-semibold">{{ $flight->segments->first()->airport->iata_code }}
+                                            </p>
+                                            <img src="{{ asset('assets/images/icons/transit-black.svg') }}" alt="icon">
                                             <p class="font-semibold">
-                                              {{ $flight->segments->last()->airport->iata_code }}
+                                                {{ $flight->segments->last()->airport->iata_code }}
                                             </p>
                                         </div>
                                         <p class="text-sm text-garuda-grey">
-                                          {{ $flight->segments->count() <= 2 ? 'Direct Flight' : 'Transit ' . ($flight->segments->count() - 2) . 'x' }}
+                                            {{ $flight->segments->count() <= 2 ? 'Direct Flight' : 'Transit ' . ($flight->segments->count() - 2) . 'x' }}
                                         </p>
                                     </div>
                                     <p class="font-semibold text-garuda-green text-center">
-                                      {{ 'Rp ' . number_format($tier->price, 0, ',', '.') }}
+                                        {{ 'Rp ' . number_format($tier->price, 0, ',', '.') }}
                                     </p>
                                 </div>
                             </div>
                             <hr class="border-[#E8EFF7]">
                             <div class="flex items-center rounded-[20px] gap-[14px]">
                                 <div class="flex w-[120px] h-[100px] shrink-0 rounded-[20px] overflow-hidden">
-                                  @if ($tier->class == 'economy')
-                                      <img src="{{ asset('assets/images/thumbnails/economy-seat.png') }}"
-                                          class="w-full h-full object-cover" alt="thumbnails-{{ $tier->class }}">
-                                  @elseif ($tier->class == 'business')
-                                      <img src="{{ asset('assets/images/thumbnails/business-seat.png') }}"
-                                          class="w-full h-full object-cover" alt="thumbnails-{{ $tier->class }}">
-                                  @endif
+                                    @if ($tier->class == 'economy')
+                                        <img src="{{ asset('assets/images/thumbnails/economy-seat.png') }}"
+                                            class="w-full h-full object-cover" alt="thumbnails-{{ $tier->class }}">
+                                    @elseif ($tier->class == 'business')
+                                        <img src="{{ asset('assets/images/thumbnails/business-seat.png') }}"
+                                            class="w-full h-full object-cover" alt="thumbnails-{{ $tier->class }}">
+                                    @endif
                                 </div>
                                 <div>
                                     <p class="font-bold text-xl leading-[30px]">{{ ucfirst($tier->class) }} Class</p>
-                                    <p class="text-garuda-grey mt-1">{{ 'Rp ' . number_format($tier->price, 0, ',', '.') }}</p>
+                                    <p class="text-garuda-grey mt-1">{{ 'Rp ' . number_format($tier->price, 0, ',', '.') }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +130,7 @@
                             </div>
                             <div>
                                 <p class="text-sm text-garuda-grey">Tiers</p>
-                                <p class="font-semibold text-lg leading-[27px] mt-[2px]">Economy</p>
+                                <p class="font-semibold text-lg leading-[27px] mt-[2px]">{{ \Str::ucfirst($tier->class) }}</p>
                             </div>
                             <div>
                                 <p class="text-sm text-garuda-grey">Seats</p>
@@ -131,7 +144,7 @@
                             </div>
                             <div>
                                 <p class="text-sm text-garuda-grey">Govt. Tax</p>
-                                <p class="font-semibold text-lg leading-[27px] mt-[2px]" id="tax">11%</p>
+                                <p class="font-semibold text-lg leading-[27px] mt-[2px]" id="tax">%</p>
                             </div>
                             <div>
                                 <p class="text-sm text-garuda-grey">Sub Total</p>
@@ -158,8 +171,12 @@
                 <div class="relative flex flex-col justify-end">
                     <img id="Plane-Windshield" src="{{ asset('assets/images/backgrounds/plane-windshield.svg') }}"
                         class="absolute top-16 w-full object-contain px-[56px]" alt="image">
-                    <form action="passenger-details.html" class="relative px-[56px] pb-[60px]" id="form-seat">
-                        <p class="text-center font-bold text-xl leading-[30px]">Economy Class</p>
+                    <form method="POST" action="{{ route('booking.confirm-seat', $flight->flight_number) }}"
+                        class="relative px-[56px] pb-[60px]" id="form-seat">
+                        @csrf
+                        <input type="hidden" name="flight_id" value="{{ $flight->id }}">
+                        <p class="text-center font-bold text-xl leading-[30px]">{{ \Str::ucfirst($tier->class) }} Class
+                        </p>
                         <div id="Legend" class="flex items-center justify-center mb-[30px] gap-5 mt-5">
                             <div class="flex items-center gap-[6px]">
                                 <span class="w-4 h-4 flex shrink-0 rounded-[6px] bg-white border border-[#FFA44B]"></span>
@@ -174,679 +191,29 @@
                                 <span class="font-semibold">Selected</span>
                             </div>
                         </div>
-                        <div id="Seats-Options" class="flex flex-wrap w-full gap-y-8 gap-x-[14px] ">
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    A1</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    A2</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    A3</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    A4</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    A5</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    A6</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    B1</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    B2</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    B3</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    B4</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    B5</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    B6</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    C1</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    C2</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    C3</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    C4</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    C5</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    C6</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    D1</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    D2</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    D3</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    D4</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    D5</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    D6</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    E1</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    E2</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    E3</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    E4</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    E5</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    E6</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    F1</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    F2</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    F3</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    F4</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    F5</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    F6</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    G1</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    G2</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    G3</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    G4</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    G5</p>
-                            </label>
-                            <label class="group relative flex w-[55px] h-[52.25px] shrink-0 [&:nth-child(6n+3)]:mr-[46px]">
-                                <input type="checkbox" name="seat"
-                                    class="seat-checkbox absolute top-1/2 left-1/2 opacity-0" disabled />
-                                <img src="assets/images/icons/seat.svg"
-                                    class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-choosed.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
-                                    alt="seat">
-                                <img src="assets/images/icons/seat-disabled.svg"
-                                    class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
-                                    alt="seat">
-                                <p
-                                    class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
-                                    G6</p>
-                            </label>
+                        <div id="Seats-Options"
+                            class="flex flex-wrap w-full gap-y-8 {{ $tier->class == 'business' ? 'gap-x-10 px-[33px]' : 'gap-x-[14px]' }} ">
+                            @foreach ($flight->seats->where('class_type', $tier->class) as $seat)
+                                <label
+                                    class="group relative flex w-[55px] h-[52.25px] shrink-0 {{ $tier->class == 'business' ? '[&:nth-child(4n+2)]:mr-10' : '[&:nth-child(6n+3)]:mr-[46px]' }}"
+                                    data-seat="{{ $seat->name }}" data-seat-id="{{ $seat->id }}">
+                                    <input type="checkbox" name="seat"
+                                        class="seat-checkbox absolute top-1/2 left-1/2 opacity-0"
+                                        {{ !$seat->is_available ? 'disabled' : '' }} />
+                                    <img src="{{ asset('assets/images/icons/seat.svg') }}"
+                                        class="absolute w-full h-full object-contain opacity-100 group-has-[:checked]:opacity-0 group-has-[:disabled]:opacity-0 transition-all duration-300"
+                                        alt="seat">
+                                    <img src="{{ asset('assets/images/icons/seat-choosed.svg') }}"
+                                        class="absolute w-full h-full object-contain opacity-0 group-has-[:checked]:opacity-100 group-has-[:disabled]:opacity-0 transition-all duration-300"
+                                        alt="seat">
+                                    <img src="{{ asset('assets/images/icons/seat-disabled.svg') }}"
+                                        class="absolute w-full h-full object-contain opacity-0 group-has-[:disabled]:opacity-100 transition-all duration-300"
+                                        alt="seat">
+                                    <p
+                                        class="relative flex items-center justify-center h-full w-full pb-[8.25px] font-semibold text-[16.5px] leading-[24.75px] text-premiere-black group-has-[:checked]:text-white">
+                                        {{ $seat->name }}</p>
+                                </label>
+                            @endforeach
                         </div>
                         <button type="submit"
                             class="w-full rounded-full py-3 px-5 text-center bg-garuda-blue hover:shadow-[0px_14px_30px_0px_#0068FF66] transition-all duration-300 mt-[30px]">
@@ -857,4 +224,11 @@
             </div>
         </div>
     </main>
+@endsection
+
+@section('scripts')
+    <script>
+        const basePrice = {{ $tier->price }};
+    </script>
+    <script src="{{ asset('assets/js/chose-seat.js') }}"></script>
 @endsection
