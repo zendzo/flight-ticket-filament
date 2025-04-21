@@ -20,10 +20,10 @@ class TransactionRepository implements TransactionRepositoryInterface {
     $transactions = session()->get('transaction', []);
 
     foreach ($transactions as $key => $value) {
-      $transaction[$key] = $value;
+      $transactions[$key] = $value;
     }
 
-    session()->put('transaction', $transaction);
+    session()->put('transaction', $transactions);
   }
 
   public function saveTransaction($transaction)
