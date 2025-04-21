@@ -19,11 +19,11 @@ class TransactionRepository implements TransactionRepositoryInterface {
   {
     $transactions = session()->get('transaction', []);
 
-    foreach ($transactions as $key => $value) {
-      $transactions[$key] = $value;
+    foreach ($data as $key => $value) {
+      $transaction[$key] = $value;
     }
 
-    session()->put('transaction', $transactions);
+    session()->put('transaction', $transaction);
   }
 
   public function saveTransaction($transaction)

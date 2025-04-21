@@ -76,7 +76,8 @@
                                 </p>
                             </div>
                             <p class="font-semibold text-garuda-green text-center">
-                                {{ 'Rp ' . number_format($flight->classes->first()->price, 0, ',', '.') }}</p>
+                                {{ 'Rp ' . number_format($flight->classes->first()->price, 0, ',', '.') }}
+                              </p>
                         </div>
                     </div>
                 </div>

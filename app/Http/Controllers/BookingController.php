@@ -16,7 +16,6 @@ class BookingController extends Controller
   public function booking(Request $request, $flightNumber, TransactionRepositoryInterface $transactionRepository)
   {
     $transactionRepository->saveTransactionDataToSession($request->all());
-
     return redirect()->route('booking.choose-seat', [
       'flightNumber' => $flightNumber,
     ]);
@@ -25,7 +24,6 @@ class BookingController extends Controller
   public function chooseSeat($flightNumber, TransactionRepositoryInterface $transactionRepository, FlightRepositoryInterface $flightRepository)
   {
     $transaction = $transactionRepository->getTransactionsDataFromSession();
-    dd(session()->all());
     $flight = $flightRepository->getFlightsByFlightNumber($flightNumber);
     $tier = $flight->classes->find($transaction['flight_class_id']);
     if (!$transaction) {
