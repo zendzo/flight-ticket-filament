@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string("code", 10)->unique();
-            $table->foreignId("flight_id")->constrained()->cascadeOnDelete();
-            $table->foreignId("flight_class_id")->constrained()->cascadeOnDelete();
-            $table->string("name");
-            $table->string("email");
-            $table->string("phone");
-            $table->integer("total_passengers");
-            $table->foreignId("promo_code_id")->nullable()->constrained()->cascadeOnDelete();
-            $table->enum("payment_status", ["pending", "success", "failed"])->default("pending");
-            $table->integer("subtotal");
-            $table->integer("grandtotal");
+            $table->string('code', 10)->unique();
+            $table->foreignId('flight_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('flight_class_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->integer('total_passengers');
+            $table->foreignId('promo_code_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->enum('payment_status', ['pending', 'success', 'failed'])->default('pending');
+            $table->integer('subtotal');
+            $table->integer('grandtotal');
             $table->softDeletes();
             $table->timestamps();
         });

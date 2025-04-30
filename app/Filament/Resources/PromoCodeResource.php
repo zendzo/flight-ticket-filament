@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PromoCodeResource\Pages;
-use App\Filament\Resources\PromoCodeResource\RelationManagers;
 use App\Models\PromoCode;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PromoCodeResource extends Resource
 {
@@ -52,9 +49,9 @@ class PromoCodeResource extends Resource
                 Tables\Columns\TextColumn::make('discount_type')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('discount_value')
-                    ->formatStateUsing(fn(PromoCode $record) : string => match ($record->discount_type) {
-                        'percentage' => $record->discount_value . '%',
-                        'fixed' => 'Rp. ' . number_format($record->discount_value, 0, ',', '.'),
+                    ->formatStateUsing(fn (PromoCode $record): string => match ($record->discount_type) {
+                        'percentage' => $record->discount_value.'%',
+                        'fixed' => 'Rp. '.number_format($record->discount_value, 0, ',', '.'),
                     })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('valid_until')

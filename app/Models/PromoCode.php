@@ -19,7 +19,7 @@ class PromoCode extends Model
         'is_available',
     ];
 
-    public function transaction() : HasOne
+    public function transaction(): HasOne
     {
         return $this->hasOne(Transaction::class);
     }

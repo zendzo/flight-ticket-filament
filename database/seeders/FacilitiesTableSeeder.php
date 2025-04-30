@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FacilitiesTableSeeder extends Seeder
@@ -13,11 +12,11 @@ class FacilitiesTableSeeder extends Seeder
     public function run(): void
     {
         $facilities = [
-          ['name' => 'Baggage', 'description' => 'Free Baggage Allowance'],
-          ['name' => 'Entertainment', 'description' => 'In-flight Entertainment'],
-          ['name' => 'USB C and Port', 'description' => 'USB C and Port'],
-          ['name' => 'Wi-Fi Onboard', 'description' => 'Wi-Fi Onboard'],
-          ['name' => 'Heavy Meals', 'description' => 'Heavy Meals'],
+            ['name' => 'Baggage', 'description' => 'Free Baggage Allowance'],
+            ['name' => 'Entertainment', 'description' => 'In-flight Entertainment'],
+            ['name' => 'USB C and Port', 'description' => 'USB C and Port'],
+            ['name' => 'Wi-Fi Onboard', 'description' => 'Wi-Fi Onboard'],
+            ['name' => 'Heavy Meals', 'description' => 'Heavy Meals'],
         ];
 
         foreach ($facilities as $facility) {

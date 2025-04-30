@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TransactionResource\Pages;
-use App\Filament\Resources\TransactionResource\RelationManagers;
 use App\Models\Transaction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TransactionResource extends Resource
 {
@@ -25,54 +22,54 @@ class TransactionResource extends Resource
             ->schema([
                 Forms\Components\Section::make('Informasi Umum')
                     ->schema([
-                      Forms\Components\Select::make('flight_id')
-                        ->label('Penerbangan')
-                        ->relationship('flight', 'flight_number')
-                        ->required(),
-                      Forms\Components\Select::make('class_id')
-                        ->label('Kelas')
-                        ->relationship('class', 'class')
-                        ->required(),
+                        Forms\Components\Select::make('flight_id')
+                            ->label('Penerbangan')
+                            ->relationship('flight', 'flight_number')
+                            ->required(),
+                        Forms\Components\Select::make('class_id')
+                            ->label('Kelas')
+                            ->relationship('class', 'class')
+                            ->required(),
                     ]),
                 Forms\Components\Section::make('Informasi Penumpang')
                     ->schema([
-                      Forms\Components\TextInput::make('total_passengers')
-                        ->label('Jumlah Penumpang')
-                        ->required(),
-                      Forms\Components\TextInput::make('name')
-                        ->label('Nama')
-                        ->required(),
-                      Forms\Components\TextInput::make('email')
-                        ->label('Email')
-                        ->required(),
-                      Forms\Components\TextInput::make('phone')
-                        ->label('Telepon')
-                        ->required(),
-                      Forms\Components\Section::make('Daftar Penumpang')
-                          ->schema([
-                            Forms\Components\Repeater::make('passengers')
-                              ->relationship('passengers')
-                              ->schema([
-                                  Forms\Components\Select::make('seat.name'),
-                                  Forms\Components\TextInput::make('name'),
-                                  Forms\Components\TextInput::make('date_of_birth'),
-                                  Forms\Components\TextInput::make('nationality'),
-                              ])
-                          ])
-                              ]),
+                        Forms\Components\TextInput::make('total_passengers')
+                            ->label('Jumlah Penumpang')
+                            ->required(),
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nama')
+                            ->required(),
+                        Forms\Components\TextInput::make('email')
+                            ->label('Email')
+                            ->required(),
+                        Forms\Components\TextInput::make('phone')
+                            ->label('Telepon')
+                            ->required(),
+                        Forms\Components\Section::make('Daftar Penumpang')
+                            ->schema([
+                                Forms\Components\Repeater::make('passengers')
+                                    ->relationship('passengers')
+                                    ->schema([
+                                        Forms\Components\Select::make('seat.name'),
+                                        Forms\Components\TextInput::make('name'),
+                                        Forms\Components\TextInput::make('date_of_birth'),
+                                        Forms\Components\TextInput::make('nationality'),
+                                    ]),
+                            ]),
+                    ]),
                 Forms\Components\Section::make('Informasi Pembayaran')
-                              ->schema([
-                                Forms\Components\TextInput::make('promo.code')
-                                  ->label('Kode Promo'),
-                                Forms\Components\TextInput::make('promo.discount_type'),
-                                Forms\Components\TextInput::make('promo.discount_value'),
-                                Forms\Components\TextInput::make('payment_status')
-                                  ->label('Status Pembayaran'),
-                                Forms\Components\TextInput::make('subtotal')
-                                  ->label('Subtotal'),
-                                Forms\Components\TextInput::make('grandtotal')
-                                  ->label('Grandtotal'),
-                              ])
+                    ->schema([
+                        Forms\Components\TextInput::make('promo.code')
+                            ->label('Kode Promo'),
+                        Forms\Components\TextInput::make('promo.discount_type'),
+                        Forms\Components\TextInput::make('promo.discount_value'),
+                        Forms\Components\TextInput::make('payment_status')
+                            ->label('Status Pembayaran'),
+                        Forms\Components\TextInput::make('subtotal')
+                            ->label('Subtotal'),
+                        Forms\Components\TextInput::make('grandtotal')
+                            ->label('Grandtotal'),
+                    ]),
             ]);
     }
 

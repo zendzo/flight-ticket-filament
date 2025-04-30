@@ -19,17 +19,17 @@ class FlightClass extends Model
         'available_seats',
     ];
 
-    public function flight() : BelongsTo
+    public function flight(): BelongsTo
     {
         return $this->belongsTo(Flight::class);
     }
 
-    public function facilities() : BelongsToMany
+    public function facilities(): BelongsToMany
     {
         return $this->belongsToMany(Facility::class, 'flight_class_facility', 'flight_class_id', 'facility_id');
     }
 
-    public function transactions() : HasMany
+    public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }

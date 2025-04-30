@@ -17,7 +17,7 @@ class Facility extends Model
         'description',
     ];
 
-    public function classes() : BelongsToMany
+    public function classes(): BelongsToMany
     {
         return $this->belongsToMany(FlightClass::class, 'flight_class_facility', 'facility_id', 'flight_class_id');
     }

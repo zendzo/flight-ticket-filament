@@ -4,12 +4,12 @@ namespace App\Providers;
 
 use App\Interfaces\AirlineRepositoryInterface;
 use App\Interfaces\AirportRepositoryInterface;
-use App\Interfaces\FlightRepositoryInterface;
 use App\Interfaces\FacilityRepositoryInterface;
+use App\Interfaces\FlightRepositoryInterface;
 use App\Interfaces\TransactionRepositoryInterface;
-use App\Repositories\FacilityRepository;
 use App\Repositories\AirlineRepository;
 use App\Repositories\AirportRepository;
+use App\Repositories\FacilityRepository;
 use App\Repositories\FlightRepository;
 use App\Repositories\TransactionRepository;
 use Illuminate\Support\ServiceProvider;

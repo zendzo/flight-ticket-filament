@@ -17,96 +17,96 @@ class Flight extends Model
         'flight_number',
     ];
 
-    public function airline() : BelongsTo
+    public function airline(): BelongsTo
     {
         return $this->belongsTo(Airline::class);
     }
 
-    public function segments() : HasMany
+    public function segments(): HasMany
     {
         return $this->hasMany(FlightSegment::class);
     }
 
-    public function classes() : HasMany
+    public function classes(): HasMany
     {
         return $this->hasMany(FlightClass::class);
     }
 
-    public function seats() : HasMany
+    public function seats(): HasMany
     {
         return $this->hasMany(FlightSeat::class);
     }
 
-    public function transactions() : HasMany
+    public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }
 
     public function generateSeats()
     {
-      $classes = $this->classes;
+        $classes = $this->classes;
 
-      foreach ($classes as $class) {
-        $totalSeats = $class->available_seats;
-        $seatsPerRow = $this->getSeatsPerRow($class->class);
-        $rows = ceil($totalSeats / $seatsPerRow);
+        foreach ($classes as $class) {
+            $totalSeats = $class->available_seats;
+            $seatsPerRow = $this->getSeatsPerRow($class->class);
+            $rows = ceil($totalSeats / $seatsPerRow);
 
-        $existingSeats = FlightSeat::where('flight_id', $this->id)
-          ->where('class_type', $class->class)
-          ->get();
+            $existingSeats = FlightSeat::where('flight_id', $this->id)
+                ->where('class_type', $class->class)
+                ->get();
 
-        $existingRows = $existingSeats->pluck('row')->toArray();
+            $existingRows = $existingSeats->pluck('row')->toArray();
 
-        $seatCounter = 1;
+            $seatCounter = 1;
 
-        for ($row = 1; $row <= $rows; $row++) {
-          if (!in_array($row, $existingRows)) {
-            for ($column = 1; $column <= $seatsPerRow; $column++) {
-              if ($seatCounter > $totalSeats) {
-                break;
-              }
+            for ($row = 1; $row <= $rows; $row++) {
+                if (! in_array($row, $existingRows)) {
+                    for ($column = 1; $column <= $seatsPerRow; $column++) {
+                        if ($seatCounter > $totalSeats) {
+                            break;
+                        }
 
-              $seatCode = $this->generateSeatCode($row, $column);
+                        $seatCode = $this->generateSeatCode($row, $column);
 
-              FlightSeat::create([
-                'flight_id' => $this->id,
-                'name' => $seatCode,
-                'row' => $row,
-                'column' => $column,
-                'is_available' => true,
-                'class_type' => $class->class,
-              ]);
+                        FlightSeat::create([
+                            'flight_id' => $this->id,
+                            'name' => $seatCode,
+                            'row' => $row,
+                            'column' => $column,
+                            'is_available' => true,
+                            'class_type' => $class->class,
+                        ]);
 
-              $seatCounter++;
+                        $seatCounter++;
+                    }
+                }
             }
-          }
-        }
 
-        foreach ($existingSeats as $existingSeat) {
-          if ($existingSeat->column > $seatsPerRow || $existingSeat->row > $rows) {
-            $existingSeat->is_available = false;
-            $existingSeat->save();
-          }
+            foreach ($existingSeats as $existingSeat) {
+                if ($existingSeat->column > $seatsPerRow || $existingSeat->row > $rows) {
+                    $existingSeat->is_available = false;
+                    $existingSeat->save();
+                }
+            }
         }
-      }
     }
 
     protected function getSeatsPerRow($classType)
     {
-      switch ($classType) {
-        case 'business':
-          return 4;
-        case 'economy':
-          return 6;
-        default:
-          return 4;
-      }
+        switch ($classType) {
+            case 'business':
+                return 4;
+            case 'economy':
+                return 6;
+            default:
+                return 4;
+        }
     }
 
     private function generateSeatCode($row, $column)
     {
-      $rowLetter = chr(64 + $row);
+        $rowLetter = chr(64 + $row);
 
-      return $rowLetter . $column;
+        return $rowLetter.$column;
     }
 }

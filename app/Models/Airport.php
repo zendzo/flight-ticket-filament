@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Airport extends Model
 {
     use HasFactory, SoftDeletes;
-  
+
     protected $fillable = [
         'iata_code',
         'name',

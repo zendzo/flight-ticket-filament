@@ -11,23 +11,23 @@ class FlightSegment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-      'sequence',
-      'flight_id',
-      'airport_id',
-      'time',
+        'sequence',
+        'flight_id',
+        'airport_id',
+        'time',
     ];
 
     protected $casts = [
-      'time' => 'datetime',
+        'time' => 'datetime',
     ];
 
-    public function flight() : BelongsTo
+    public function flight(): BelongsTo
     {
         return $this->belongsTo(Flight::class);
-      
+
     }
 
-    public function airport() : BelongsTo
+    public function airport(): BelongsTo
     {
         return $this->belongsTo(Airport::class);
     }

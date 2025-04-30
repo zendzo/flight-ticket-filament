@@ -13,7 +13,7 @@ class ListTransactions extends ListRecords
     public function getHeaderWidgets(): array
     {
         return [
-          TransactionResource\Widgets\TransactionOverview::class
+            TransactionResource\Widgets\TransactionOverview::class,
         ];
     }
 

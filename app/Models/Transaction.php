@@ -13,35 +13,35 @@ class Transaction extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-      'code',
-      'flight_id',
-      'flight_class_id',
-      'name',
-      'phone',
-      'email',
-      'total_passengers',
-      'promo_code_id', 
-      'payment_status',
-      'subtotal',
-      'grandtotal',
+        'code',
+        'flight_id',
+        'flight_class_id',
+        'name',
+        'phone',
+        'email',
+        'total_passengers',
+        'promo_code_id',
+        'payment_status',
+        'subtotal',
+        'grandtotal',
     ];
 
-    public function flight() : BelongsTo
+    public function flight(): BelongsTo
     {
         return $this->belongsTo(Flight::class);
     }
 
-    public function class() : BelongsTo
+    public function class(): BelongsTo
     {
         return $this->belongsTo(FlightClass::class, 'flight_class_id');
     }
 
-    public function promo() : BelongsTo
+    public function promo(): BelongsTo
     {
         return $this->belongsTo(PromoCode::class, 'promo_code_id');
     }
 
-    public function passengers() : HasMany
+    public function passengers(): HasMany
     {
         return $this->hasMany(TransactionPassenger::class);
     }

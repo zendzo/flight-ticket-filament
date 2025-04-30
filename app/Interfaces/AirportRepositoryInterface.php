@@ -2,8 +2,11 @@
 
 namespace App\Interfaces;
 
-interface AirportRepositoryInterface {
-  public function getAllAirports();
-  public function getAirportBySlug($slug);
-  public function getAirportByIataCode($code);
+interface AirportRepositoryInterface
+{
+    public function getAllAirports();
+
+    public function getAirportBySlug($slug);
+
+    public function getAirportByIataCode($code);
 }

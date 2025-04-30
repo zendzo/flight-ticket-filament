@@ -4,5 +4,5 @@ namespace App\Interfaces;
 
 interface AirlineRepositoryInterface
 {
-  public function getAll();
+    public function getAll();
 }

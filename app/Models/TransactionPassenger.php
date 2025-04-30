@@ -19,12 +19,12 @@ class TransactionPassenger extends Model
         'nationality',
     ];
 
-    public function transaction() : BelongsTo
+    public function transaction(): BelongsTo
     {
         return $this->belongsTo(Transaction::class);
     }
 
-    public function seat() : BelongsTo
+    public function seat(): BelongsTo
     {
         return $this->belongsTo(FlightSeat::class, 'flight_seat_id');
     }

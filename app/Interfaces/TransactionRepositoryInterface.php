@@ -2,15 +2,15 @@
 
 namespace App\Interfaces;
 
-interface TransactionRepositoryInterface {
+interface TransactionRepositoryInterface
+{
+    public function getTransactionsDataFromSession();
 
-  public function getTransactionsDataFromSession();
+    public function saveTransactionDataToSession($data);
 
-  public function saveTransactionDataToSession($data);
+    public function saveTransaction($transaction);
 
-  public function saveTransaction($transaction);
+    public function getTransactionByCode($code);
 
-  public function getTransactionByCode($code);
-
-  public function getTransactionByCodeEmailPhone($code, $email, $phone);
+    public function getTransactionByCodeEmailPhone($code, $email, $phone);
 }

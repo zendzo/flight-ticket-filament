@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\FlightResource\Pages;
-use App\Filament\Resources\FlightResource\RelationManagers;
 use App\Models\Flight;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FlightResource extends Resource
 {
@@ -25,68 +22,68 @@ class FlightResource extends Resource
             ->schema([
                 Forms\Components\Wizard::make([
                     Forms\Components\Wizard\Step::make('Flight Information')
-                      ->schema([
-                        Forms\Components\TextInput::make('flight_number')
-                          ->label('Flight Number')
-                          ->required(),
-                        Forms\Components\Select::make('airline_id')
-                          ->label('Airline')
-                          ->relationship('airline', 'name')
-                          ->required(),
-                      ]),
+                        ->schema([
+                            Forms\Components\TextInput::make('flight_number')
+                                ->label('Flight Number')
+                                ->required(),
+                            Forms\Components\Select::make('airline_id')
+                                ->label('Airline')
+                                ->relationship('airline', 'name')
+                                ->required(),
+                        ]),
                     Forms\Components\Wizard\Step::make('Flight Segments')
-                      ->schema([
-                        Forms\Components\Repeater::make('flight_segments')
-                          ->relationship('segments')
-                          ->schema([
-                            Forms\Components\TextInput::make('sequence')
-                              ->label('Sequence')
-                              ->numeric()
-                              ->required(),
-                            Forms\Components\Select::make('airport_id')
-                              ->label('Airport')
-                              ->relationship('airport', 'name')
-                              ->required(),
-                            Forms\Components\DateTimePicker::make('time')
-                              ->label('Time')
-                              ->required(),
-                          ])
-                          ->collapsed(false)
-                          ->minItems(1)
-                      ]),
+                        ->schema([
+                            Forms\Components\Repeater::make('flight_segments')
+                                ->relationship('segments')
+                                ->schema([
+                                    Forms\Components\TextInput::make('sequence')
+                                        ->label('Sequence')
+                                        ->numeric()
+                                        ->required(),
+                                    Forms\Components\Select::make('airport_id')
+                                        ->label('Airport')
+                                        ->relationship('airport', 'name')
+                                        ->required(),
+                                    Forms\Components\DateTimePicker::make('time')
+                                        ->label('Time')
+                                        ->required(),
+                                ])
+                                ->collapsed(false)
+                                ->minItems(1),
+                        ]),
                     Forms\Components\Wizard\Step::make('Flight Classes')
-                      ->schema([
-                        Forms\Components\Repeater::make('flight_classes')
-                          ->relationship('classes')
-                          ->schema([
-                            Forms\Components\Select::make('class')
-                              ->label('Class')
-                              ->options([
-                                'economy' => 'Economy',
-                                'business' => 'Business',
-                              ])
-                              ->required(),
-                            Forms\Components\TextInput::make('price')
-                              ->label('Price')
-                              ->numeric()
-                              ->prefix('IDR')
-                              ->minValue(0)
-                              ->required(),
-                            Forms\Components\TextInput::make('available_seats')
-                              ->label('Available Seats')
-                              ->numeric()
-                              ->required(),
-                            Forms\Components\Select::make('facilities')
-                              ->label('Facilities')
-                              ->relationship('facilities', 'name')
-                              ->multiple()
-                              ->preload(true)
-                              ->required(),
-                          ])
-                          ->collapsed(false)
-                          ->minItems(1)
-                      ]),
-                ])->columnSpan(2)
+                        ->schema([
+                            Forms\Components\Repeater::make('flight_classes')
+                                ->relationship('classes')
+                                ->schema([
+                                    Forms\Components\Select::make('class')
+                                        ->label('Class')
+                                        ->options([
+                                            'economy' => 'Economy',
+                                            'business' => 'Business',
+                                        ])
+                                        ->required(),
+                                    Forms\Components\TextInput::make('price')
+                                        ->label('Price')
+                                        ->numeric()
+                                        ->prefix('IDR')
+                                        ->minValue(0)
+                                        ->required(),
+                                    Forms\Components\TextInput::make('available_seats')
+                                        ->label('Available Seats')
+                                        ->numeric()
+                                        ->required(),
+                                    Forms\Components\Select::make('facilities')
+                                        ->label('Facilities')
+                                        ->relationship('facilities', 'name')
+                                        ->multiple()
+                                        ->preload(true)
+                                        ->required(),
+                                ])
+                                ->collapsed(false)
+                                ->minItems(1),
+                        ]),
+                ])->columnSpan(2),
             ]);
     }
 
@@ -100,11 +97,12 @@ class FlightResource extends Resource
                 Tables\Columns\TextColumn::make('airline.name'),
                 Tables\Columns\TextColumn::make('segments')
                     ->label('Route & Duration')
-                    ->formatStateUsing(function (Flight $record) : string {
+                    ->formatStateUsing(function (Flight $record): string {
                         $firstSegment = $record->segments->first();
                         $lastSegment = $record->segments->last();
-                        $route = $firstSegment->airport->iata_code . ' - ' . $lastSegment->airport->iata_code;
-                        $duration = (new \DateTime($firstSegment->timte))->format('d F Y H:i') . ' - ' . (new \DateTime($lastSegment->time))->format('d F Y H:i');
+                        $route = $firstSegment->airport->iata_code.' - '.$lastSegment->airport->iata_code;
+                        $duration = (new \DateTime($firstSegment->timte))->format('d F Y H:i').' - '.(new \DateTime($lastSegment->time))->format('d F Y H:i');
+
                         return "{$route} | ({$duration})";
                     }),
             ])

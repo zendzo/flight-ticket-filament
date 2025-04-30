@@ -20,12 +20,12 @@ class FlightSeat extends Model
         'is_available',
     ];
 
-    public function flight() : BelongsTo
+    public function flight(): BelongsTo
     {
         return $this->belongsTo(Flight::class);
     }
 
-    public function passengers() : HasOne
+    public function passengers(): HasOne
     {
         return $this->hasOne(TransactionPassenger::class);
     }
