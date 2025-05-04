@@ -55,7 +55,6 @@ class BookingController extends Controller
         if (! $transaction) {
             return redirect()->back();
         }
-
         return view('pages.booking.passenger-details', [
             'flight' => $flight,
             'transaction' => $transaction,
